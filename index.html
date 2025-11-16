@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>متجري — My Luxury Shop</title>
+  <style>
+    :root{
+      --bg:#0b0b0b; --card:#0f0f10; --muted:#bfb8a8; --gold:#c9a34a; --white:#ffffff; --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,#070707 0%, #0f0f10 60%); color:var(--white); -webkit-font-smoothing:antialiased;
+      padding:24px;
+    }
+
+    /* container */
+    .wrap{max-width:1100px;margin:0 auto}
+
+    /* header */
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#7f6a2d);display:flex;align-items:center;justify-content:center;font-weight:700;color:#0b0b0b}
+    .title{line-height:1}
+    .title h1{margin:0;font-size:18px;letter-spacing:0.6px}
+    .title p{margin:0;font-size:12px;color:var(--muted)}
+
+    /* controls */
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;cursor:pointer}
+    .btn.gold{background: linear-gradient(90deg, rgba(201,163,74,0.12), rgba(201,163,74,0.06));border:1px solid rgba(201,163,74,0.45)}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:26px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:18px;border:1px solid rgba(255,255,255,0.03)}
+    .hero h2{margin:0 0 8px 0;font-size:28px}
+    .hero p{margin:0;color:var(--muted)}
+
+    /* products */
+    .products{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px}
+    .card{background:var(--card);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .img{height:160px;border-radius:10px;background:linear-gradient(135deg,#1a1a1a,#0a0a0a);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted)}
+    .product-title{font-weight:600;margin:10px 0 6px}
+    .price{font-weight:700;color:var(--gold)}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* footer */
+    footer{margin-top:28px;color:var(--muted);text-align:center}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,0.6);visibility:hidden;opacity:0;transition:all .18s}
+    .modal.open{visibility:visible;opacity:1}
+    .modal-card{width:100%;max-width:760px;background:linear-gradient(180deg,#0c0c0c,#0b0b0b);border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,0.04)}
+
+    /* RTL support */
+    .ar{direction:rtl;text-align:right}
+    .en{direction:ltr;text-align:left}
+
+    /* responsive */
+    @media(max-width:900px){.hero{grid-template-columns:1fr;}.logo{width:52px;height:52px}}
+  </style>
+</head>
+<body class="ar">
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">ML</div>
+        <div class="title">
+          <h1 id="site-name">متجري — My Luxury Shop</h1>
+          <p id="site-sub">أرقى المنتجات بتوقيع مميز</p>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="lang-toggle">English</button>
+        <button class="btn gold" id="cart-btn">السلة (0)</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h2 id="hero-title">اكتشف الفخامة</h2>
+        <p id="hero-desc">مجموعتنا المختارة بعناية — جودة، أناقة، وتحف فنية للاختيار منها.</p>
+        <div style="margin-top:16px;display:flex;gap:10px">
+          <button class="btn gold" onclick="scrollToProducts()" id="shop-now">تسوق الآن</button>
+          <button class="btn" id="learn-more">المزيد عن المتجر</button>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:linear-gradient(135deg,#121212,#0b0b0b);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)">
+            <div class="small">شحن سريع</div>
+            <div style="font-weight:700">خدمة 24/7</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#121212,#0b0b0b);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)">
+            <div class="small">ضمان</div>
+            <div style="font-weight:700">استرجاع خلال 14 يوم</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 style="margin-top:26px" id="collection-title">التشكيلة</h3>
+      <div class="products" id="products"></div>
+    </section>
+
+    <footer>
+      <div id="footer-text">© 2025 متجري — جميع الحقوق محفوظة</div>
+    </footer>
+  </div>
+
+  <!-- modal -->
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div id="modal-content"></div>
+      <div style="margin-top:12px;text-align:right">
+        <button class="btn" onclick="closeModal()">إغلاق</button>
+        <button class="btn gold" id="add-to-cart">أضف إلى السلة</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const productsData = [
+      {id:1,price:1299,title:{ar:'ساعة فاخرة',en:'Luxury Watch'},desc:{ar:'تصميم ألماني، زجاج ياقوتي',en:'German design, sapphire glass'}},
+      {id:2,price:799,title:{ar:'حقيبة جلد',en:'Leather Bag'},desc:{ar:'جلد طبيعي، خامات مميزة',en:'Genuine leather, premium craftsmanship'}},
+      {id:3,price:459,title:{ar:'قلم أنيق',en:'Elegant Pen'},desc:{ar:'إصدار محدود',en:'Limited edition'}},
+      {id:4,price:2499,title:{ar:'سماعات هيدفاي',en:'Hi-Fi Headphones'},desc:{ar:'صوت استوديو',en:'Studio-grade sound'}}
+    ];
+
+    const i18n = {
+      ar:{siteName:'متجري — My Luxury Shop',siteSub:'أرقى المنتجات بتوقيع مميز',heroTitle:'اكتشف الفخامة',heroDesc:'مجموعتنا المختارة بعناية — جودة، أناقة، وتحف فنية للاختيار منها.',shopNow:'تسوق الآن',collection:'التشكيلة',cartText:'السلة',footer:'© 2025 متجري — جميع الحقوق محفوظة',langBtn:'English'},
+      en:{siteName:'My Luxury Shop — متجري',siteSub:'Curated luxury pieces',heroTitle:'Discover Luxury',heroDesc:'Our carefully selected collection — quality, elegance, signature pieces.',shopNow:'Shop Now',collection:'Collection',cartText:'Cart',footer:'© 2025 My Luxury Shop. All rights reserved.',langBtn:'العربية'}
+    };
+
+    let lang = 'ar';
+    let cart = [];
+
+    const productsEl = document.getElementById('products');
+    const langToggle = document.getElementById('lang-toggle');
+    const cartBtn = document.getElementById('cart-btn');
+
+    function render(){
+      document.body.className = (lang==='ar')? 'ar':'en';
+      const t = i18n[lang];
+      document.getElementById('site-name').textContent = t.siteName;
+      document.getElementById('site-sub').textContent = t.siteSub;
+      document.getElementById('hero-title').textContent = t.heroTitle;
+      document.getElementById('hero-desc').textContent = t.heroDesc;
+      document.getElementById('shop-now').textContent = t.shopNow;
+      document.getElementById('collection-title').textContent = t.collection;
+      document.getElementById('footer-text').textContent = t.footer;
+      langToggle.textContent = t.langBtn;
+      cartBtn.textContent = `${t.cartText} (${cart.length})`;
+
+      productsEl.innerHTML = '';
+      for(const p of productsData){
+        const card = document.createElement('div'); card.className='card';
+        card.innerHTML = `
+          <div class="img">${p.title[lang]}</div>
+          <div class="product-title">${p.title[lang]}</div>
+          <div class="small">${p.desc[lang]}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+            <div class="price">${p.price} EGP</div>
+            <div>
+              <button class="btn" onclick="openModal(${p.id})">${lang==='ar'?'عرض':'View'}</button>
+            </div>
+          </div>`;
+        productsEl.appendChild(card);
+      }
+    }
+
+    function toggleLang(){ lang = (lang==='ar')? 'en':'ar'; render(); }
+    langToggle.addEventListener('click',()=>toggleLang());
+
+    function openModal(id){
+      const p = productsData.find(x=>x.id===id);
+      document.getElementById('modal-content').innerHTML = `
+        <h3>${p.title[lang]}</h3>
+        <p class="small">${p.desc[lang]}</p>
+        <p style="font-weight:700;margin-top:8px">${p.price} EGP</p>
+      `;
+      document.getElementById('modal').classList.add('open');
+      document.getElementById('add-to-cart').onclick = ()=>{ addToCart(p.id); closeModal(); };
+    }
+    function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+
+    function addToCart(id){ cart.push(id); render(); alert((lang==='ar')? 'تمت الإضافة للسلة':'Added to cart'); }
+
+    cartBtn.addEventListener('click',()=>{
+      const names = cart.map(id=>productsData.find(p=>p.id===id).title[lang]);
+      alert((lang==='ar'? 'منتجات في السلة:\n':'Items in cart:\n') + (names.length? names.join('\n') : (lang==='ar'? 'السلة فارغة':'Cart is empty')));
+    });
+
+    function scrollToProducts(){ window.scrollTo({top:document.getElementById('collection-title').offsetTop-20,behavior:'smooth'}); }
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>الدفع — Checkout</title>
+  <style>
+    :root{
+      --bg:#0b0b0b; --card:#111112; --muted:#bfb8a8; --gold:#c9a34a; --white:#ffffff;
+    }
+    body{
+      margin:0; padding:24px; background:#0b0b0b;
+      font-family: Inter, system-ui, sans-serif;
+      color:var(--white);
+      direction:rtl;
+    }
+    .wrap{max-width:600px;margin:0 auto}
+    h2{margin-top:0;font-size:26px}
+
+    .box{
+      background:var(--card);
+      padding:18px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.06);
+      margin-bottom:18px;
+    }
+    label{display:block;margin-bottom:6px;color:var(--muted)}
+    input,select{
+      width:100%;padding:10px;
+      background:#0d0d0d;color:var(--white);
+      border-radius:8px;border:1px solid rgba(255,255,255,0.08);
+      margin-bottom:12px;
+    }
+    .btn{
+      width:100%;padding:12px;font-size:16px;
+      border-radius:10px;
+      background:linear-gradient(90deg, rgba(201,163,74,0.3), rgba(201,163,74,0.2));
+      border:1px solid rgba(201,163,74,0.45);
+      color:var(--white);
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2>الدفع</h2>
+
+    <div class="box">
+      <h3>📦 تفاصيل الشحن</h3>
+      <label>الاسم الكامل</label>
+      <input type="text">
+
+      <label>رقم الهاتف</label>
+      <input type="text">
+
+      <label>العنوان</label>
+      <input type="text">
+    </div>
+
+    <div class="box">
+      <h3>💳 طريقة الدفع</h3>
+      <label>اختر طريقة الدفع</label>
+      <select>
+        <option>دفع عبر MyFawry</option>
+        <option>بطاقة فيزا</option>
+        <option>ماستركارد</option>
+        <option>PayPal</option>
+        <option>Vodafone Cash</option>
+      </select>
+    </div>
+
+    <button class="btn">إتمام الطلب</button>
+  </div>
+</body>
+</html>
